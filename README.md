@@ -89,7 +89,9 @@ License
 This project is licensed under the MIT License. See the LICENSE.md file for details.
 
 
-
-
-
+#Citation
+If you find our work useful in your research, please consider citing our paper:
+@article{your_name_2025_structure,
+  year={2025}
+}
 
