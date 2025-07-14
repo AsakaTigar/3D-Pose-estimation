@@ -30,7 +30,7 @@ Our code is designed to be compatible with the dataset setup introduced by Marti
 Please follow the instructions provided by VideoPose3D to download and prepare the Human3.6M dataset. All data should be placed in the ./data directory at the root of this project.
 The expected directory structure is as follows:
 
-
+```bash
 .
 ├── data/
 │   └── ... (Human3.6M dataset files)
@@ -38,6 +38,7 @@ The expected directory structure is as follows:
 ├── common/
 ├── run.py
 └── requirements.txt
+```
 
 #Training
 You can train the model using the provided scripts. We recommend a two-stage training process, where the second stage involves fine-tuning with a lower learning rate.
@@ -54,5 +55,41 @@ Model checkpoints will be saved automatically in the checkpoint/ directory durin
 
 #Testing
 To evaluate the performance of a trained model on the Human3.6M test set, use the following command. Make sure you have a trained model checkpoint (e.g., best_epoch.bin) in the checkpoint/ directory.
+
+```
+python run.py -k cpn_ft_h36m_dbb -c checkpoint --evaluate best_epoch.bin -f 27 -b 256
+```
+Generating Visualizations
+You can generate visualizations of the model's predictions on sample videos.
+Generate a GIF:
+Use this command to render the 3D pose on a subject from the dataset and save it as a GIF.
+
+
+```
+python run.py -k cpn_ft_h36m_dbb -c checkpoint --evaluate best_epoch.bin --render --viz-subject S11 --viz-action Walking --viz-camera 0 --viz-output output.gif --viz-size 3 --viz-downsample 2 --viz-limit 60 -f 27
+```
+
+Generate an MP4 Video:
+Alternatively, you can save the output as an MP4 video file.
+```
+python run.py -k cpn_ft_h36m_dbb -c checkpoint --evaluate best_epoch.bin --render --viz-subject S11 --viz-action Walking --viz-camera 0 --viz-video ./output.mp4 --viz-size 3 --viz-downsample 2 --viz-limit 60 -f 27
+```
+
+Visualization with a Pre-trained Model:
+You can also generate visualizations using a pre-trained model on a custom video.
+
+```
+python run.py -k cpn_ft_h36m_dbb -arc 3,3,3,3,3 -c checkpoint --evaluate pretrained_h36m_cpn.bin --render --viz-subject S11 --viz-action Walking --viz-camera 0 --viz-video "/path/to/your/video.mp4" --viz-output output.gif --viz-size 3 --viz-downsample 2 --viz-limit 60
+```
+Acknowledgements
+This project is built upon the foundational research of the following papers. We extend our gratitude to the authors for their significant contributions to the field.
+Martinez et al. "A simple yet effective baseline for 3d human pose estimation." ICCV, 2017.
+Pavllo et al. "3D human pose estimation in video with temporal convolutions and semi-supervised training." CVPR, 2019.
+License
+This project is licensed under the MIT License. See the LICENSE.md file for details.
+
+
+
+
 
 
